@@ -1,0 +1,21 @@
+# Generated static site
+/dist/
+
+# Dependencies and local logs
+node_modules/
+*.log
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+/.aws/
+
+# Temporary files left by interrupted metadata synchronization
+/.video-metadata.*.tmp
+
+# Archives and OS metadata
+*.zip
+*.tar.gz
+*.tgz
+.DS_Store

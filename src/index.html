@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#f7f6f0">
+  <title>__PAGE_TITLE__</title>
+  <meta name="description" content="Choose a follow-along mobility routine for this part of your day.">
+  <link rel="icon" href="__ASSET_PREFIX__sun.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="__ASSET_PREFIX__styles.css">
+  <script type="module" src="__ASSET_PREFIX__app.js"></script>
+</head>
+<body data-mode="__MODE__">
+  <a class="skip-link" href="#watch">Skip to video</a>
+  <main class="wrap">
+    <section class="morning" id="today" aria-labelledby="greeting">
+      <h1 id="greeting"><svg class="sun" viewBox="0 0 44 44" fill="none" aria-hidden="true"><circle cx="22" cy="22" r="8" fill="currentColor"/><path d="M22 3v6m0 26v6M3 22h6m26 0h6M8.6 8.6l4.2 4.2m18.4 18.4 4.2 4.2m0-26.8-4.2 4.2M12.8 31.2l-4.2 4.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>__GREETING__</span></h1>
+      <nav class="mode-nav" aria-label="Choose time of day">
+        <a data-mode="morning" href="__ASSET_PREFIX__morning/">Morning</a>
+        <a data-mode="day" href="__ASSET_PREFIX__day/">Day</a>
+      </nav>
+    </section>
+
+    <section class="watch-section" id="watch" tabindex="-1" aria-label="Selected routine">
+      <div class="video-frame" id="video-frame">
+        <div class="video-placeholder" id="player-placeholder"><span class="loader" aria-hidden="true"></span><span>Getting your video ready…</span></div>
+      </div>
+      <div class="video-details">
+        <div class="video-caption">
+          <h2 id="current-title">Your routine</h2>
+          <p class="current-author" id="current-author"></p>
+        </div>
+        <div class="player-actions">
+          <button class="button button-primary" id="shuffle"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h2c5 0 9 12 14 12h2m-4-4 4 4-4 4M3 18h2c2 0 4-2 6-5m2-2c2-3 4-5 6-5h2m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Pick another</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="library" id="library" aria-label="Video library">
+      <div class="library-controls">
+        <div class="filter-bar" id="creator-filters" role="group" aria-label="Filter by channel"></div>
+        <nav class="channel-links" id="channel-links" aria-label="YouTube channels"></nav>
+      </div>
+      <div class="video-grid" id="video-grid"></div>
+      <button class="button library-more" id="library-more" type="button" aria-controls="video-grid" hidden>Show more</button>
+      <p class="empty-state" id="empty-state" hidden>No videos are available for this selection. Try another channel.</p>
+      <p class="empty-state" id="catalog-error" role="alert" hidden>The video list could not be loaded. Please reload the page.</p>
+    </section>
+
+  </main>
+
+  <footer class="wrap footer"><details><summary>About the videos and privacy</summary><div><p>These are general, follow-along mobility sessions, selected using the creators' descriptions. This selection does not replace a personalised plan or an assessment of every movement. Stop exercising and seek medical advice if you develop new radiating pain, numbness, or weakness.</p><p>This page does not keep an exercise log or save your workout history. Opening it connects to YouTube to play the selected video, so YouTube's policies apply.</p></div></details></footer>
+
+  <noscript><div class="noscript">Please enable JavaScript to load the video list and choose a routine.</div></noscript>
+</body>
+</html>

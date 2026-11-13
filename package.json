@@ -1,0 +1,14 @@
+{
+  "name": "daily-movement",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A static exercise video picker with morning and daytime modes.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "sync:videos": "node scripts/sync-videos.mjs",
+    "check:videos": "node scripts/sync-videos.mjs --check",
+    "test": "node --test test/*.test.mjs",
+    "test:e2e": "node test/e2e.mjs"
+  }
+}
