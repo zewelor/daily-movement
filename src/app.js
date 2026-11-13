@@ -165,12 +165,12 @@ byId('library-more').addEventListener('click', () => {
 
 function renderChannels() {
   const filters = byId('creator-filters');
-  const links = byId('channel-links');
   const currentModeVideos = modeVideos();
   const currentModeChannels = channels.filter(channel => currentModeVideos.some(video => video.creatorKey === channel.key));
   filters.replaceChildren();
-  links.replaceChildren();
   for (const channel of [{ key: 'all', name: 'All' }, ...currentModeChannels]) {
+    const chip = document.createElement('div');
+    chip.className = 'channel-chip' + (channel.key === state.creator ? ' active' : '');
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'filter' + (channel.key === state.creator ? ' active' : '');
@@ -183,26 +183,27 @@ function renderChannels() {
       for (const item of filters.querySelectorAll('button')) {
         const active = item === button;
         item.classList.toggle('active', active);
+        item.parentElement.classList.toggle('active', active);
         item.setAttribute('aria-pressed', String(active));
       }
       renderLibrary();
     });
-    filters.append(button);
-  }
-  const label = document.createElement('span');
-  label.textContent = 'Channels:';
-  links.append(label);
-  for (const channel of currentModeChannels) {
-    const link = document.createElement('a');
-    link.href = channel.url;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = channel.name + ' ';
-    const arrow = document.createElement('span');
-    arrow.textContent = '↗';
-    arrow.setAttribute('aria-hidden', 'true');
-    link.append(arrow);
-    links.append(link);
+    chip.append(button);
+    if (channel.url) {
+      const link = document.createElement('a');
+      link.className = 'channel-link';
+      link.href = channel.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', `Open ${channel.name} on YouTube (opens in a new tab)`);
+      link.title = `Open ${channel.name} on YouTube`;
+      const arrow = document.createElement('span');
+      arrow.textContent = '↗';
+      arrow.setAttribute('aria-hidden', 'true');
+      link.append(arrow);
+      chip.append(link);
+    }
+    filters.append(chip);
   }
 }
 

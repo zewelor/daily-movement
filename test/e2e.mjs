@@ -65,11 +65,20 @@ try {
   await browser('open', `${site}morning/`);
   await ready('morning');
   await browser('snapshot', '-i');
+  assert.deepEqual(await evaluate(`(()=>{const link=document.querySelector('a[aria-label="Open Second on YouTube (opens in a new tab)"]');return {href:link?.href,target:link?.target,filter:link?.previousElementSibling?.dataset.creator,links:document.querySelectorAll('#creator-filters a').length};})()`), {
+    href: 'https://www.youtube.com/@second/videos', target: '_blank', filter: '@second', links: 2,
+  });
   assert.deepEqual(await evaluate(`({mode:document.body.dataset.mode,cards:document.querySelectorAll('.video-card').length,more:document.getElementById('library-more').textContent,channels:[...document.querySelectorAll('#creator-filters button')].map(x=>x.dataset.creator),active:document.querySelector('.mode-nav [aria-current]').dataset.mode})`), {
     mode: 'morning', cards: 8, more: 'Show all 11 videos', channels: ['all', '@first', '@second'], active: 'morning',
   });
   await browser('find', 'role', 'button', 'click', '--name', 'Second', '--exact');
   assert.equal(await evaluate(`document.getElementById('library-more').textContent`), 'Show all 9 videos');
+  await browser('press', 'Tab');
+  assert.equal(await evaluate('document.activeElement.getAttribute("aria-label")'), 'Open Second on YouTube (opens in a new tab)');
+  await evaluate(`document.activeElement.addEventListener('click', event => event.preventDefault(), {once:true})`);
+  await browser('press', 'Enter');
+  assert.equal(await evaluate(`document.getElementById('library-more').textContent`), 'Show all 9 videos');
+  assert.equal(await evaluate(`document.querySelector('#creator-filters button[aria-pressed="true"]').dataset.creator`), '@second');
   await browser('find', 'role', 'button', 'click', '--name', 'All', '--exact');
   await browser('find', 'role', 'button', 'click', '--name', 'Show all 11 videos', '--exact');
   assert.equal(await evaluate(`document.querySelectorAll('.video-card').length`), 11);
@@ -85,7 +94,7 @@ try {
   });
   await browser('find', 'role', 'link', 'click', '--name', 'Day', '--exact');
   await ready('day');
-  assert.deepEqual(await evaluate(`({path:location.pathname,cards:document.querySelectorAll('.video-card').length,channels:document.querySelectorAll('#channel-links a').length,disabled:document.getElementById('shuffle').disabled,id:document.querySelector('.selected').dataset.videoId})`), {
+  assert.deepEqual(await evaluate(`({path:location.pathname,cards:document.querySelectorAll('.video-card').length,channels:document.querySelectorAll('#creator-filters a').length,disabled:document.getElementById('shuffle').disabled,id:document.querySelector('.selected').dataset.videoId})`), {
     path: '/project/day/', cards: 1, channels: 1, disabled: false, id: 'aaaaaaaaaaa',
   });
   await browser('find', 'role', 'button', 'click', '--name', 'Pick another', '--exact');
@@ -102,6 +111,7 @@ try {
   const layout = await evaluate(`({playerHeight:document.getElementById('youtube-player').getBoundingClientRect().height,frameHeight:document.getElementById('video-frame').getBoundingClientRect().height,width:innerWidth,scrollWidth:document.documentElement.scrollWidth})`);
   assert.ok(layout.playerHeight >= 200, JSON.stringify(layout));
   assert.equal(layout.scrollWidth, layout.width, JSON.stringify(layout));
+  assert.equal(await evaluate(`[...document.querySelectorAll('#creator-filters button, #creator-filters a')].every(e=>{const r=e.getBoundingClientRect();return r.width>=44 && r.height>=44})`), true);
   const accessibility = await browser('a11y', '--tags', 'wcag2a,wcag2aa');
   assert.deepEqual(accessibility.violations, []);
   assert.deepEqual(requests.filter(item => item.status !== 200), []);
