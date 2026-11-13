@@ -6,9 +6,9 @@
 
 ## Source and precision
 
-The import uses the supplied yt-dlp playlist extraction snapshot. For each entry, the video ID, title, integer duration in seconds, uploader display name, and `uploader_id` were taken directly from the flat playlist entry. The playlist-level metadata identifies the channel as Człowieku RÓB RUCH! (`@robruch5230`). All 239 entry IDs, owner fields, titles, and positive durations were checked before import; no owner was inferred or substituted.
+The import uses the supplied yt-dlp playlist extraction snapshot. The video IDs, integer durations in seconds, uploader display names, and `uploader_id` values came directly from its flat entries. Playlist-level metadata identifies the channel as Człowieku RÓB RUCH! (`@robruch5230`). All 239 entry IDs, owner fields, titles, and positive durations were checked before import; no owner was inferred or substituted.
 
-A separate full-video metadata fetch checked `FohazR0tJPE`: it reports 444 seconds, matching the playlist entry. The 228 accepted videos were not all fetched again in full-metadata mode or individually played. This is a snapshot-based catalog import, not a claim that every item was independently playback-verified or refreshed.
+Flat playlist extraction can return localized title text. Each of the 228 accepted IDs was therefore fetched individually with yt-dlp's full-video extractor and no language override. The titles in `video-metadata.json` now use the full result's `title` field; each result was checked for the exact video ID, `uploader_id` `@robruch5230`, and a nonempty title. Of the 228 titles, 163 changed from the flat snapshot and 65 were identical. Cached author, channel, and duration fields were retained from the original playlist import. For example, full metadata reports `m2O4B0Rk2Vo` at 494 seconds, while the flat snapshot duration remains 495 seconds. The skipped-entry table below continues to record flat-snapshot titles and durations. This is not a claim that every item was individually played or playback-verified.
 
 ## Classification
 

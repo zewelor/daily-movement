@@ -36,7 +36,6 @@ h1 { display: flex; align-items: center; gap: 12px; font-size: 28px; line-height
 .video-details { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 20px; padding: 16px 0 4px; }
 .video-caption { flex: 1 1 360px; min-width: 0; max-width: 100%; }
 h2 { font-size: 20px; letter-spacing: -.4px; line-height: 1.25; font-weight: 550; margin: 0; overflow-wrap: anywhere; }
-.current-author { font-size: 12px; color: var(--muted); margin: 6px 0 0; overflow-wrap: anywhere; }
 .player-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 20px; flex: 0 1 auto; min-width: 0; max-width: 100%; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 11px 15px; border-radius: 8px; font-size: 12px; font-weight: 550; min-height: 44px; transition: background .15s, transform .15s; }
 .button svg { height: 17px; width: 17px; flex: none; }
@@ -103,7 +102,6 @@ h2 { font-size: 20px; letter-spacing: -.4px; line-height: 1.25; font-weight: 550
   h1 { font-size: 24px; gap: 10px; letter-spacing: -.6px; }
   .video-details { padding: 14px 0 4px; gap: 12px; }
   h2 { font-size: 18px; }
-  .current-author { font-size: 11px; }
   .player-actions { width: 100%; justify-content: flex-start; gap: 10px; }
   .button { padding: 10px 12px; font-size: 11px; }
   .video-grid { gap: 12px; }

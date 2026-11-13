@@ -78,7 +78,6 @@ function renderLibrary() {
 
 function updateSelected(video) {
   byId('current-title').textContent = video.title;
-  byId('current-author').textContent = video.creator;
   renderLibrary();
 }
 
