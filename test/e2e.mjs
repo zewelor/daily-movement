@@ -56,6 +56,12 @@ async function evaluate(code) {
 async function ready(mode) {
   await browser('wait', '--fn', `document.body.dataset.mode === '${mode}' && document.querySelector('.video-card')`);
 }
+async function checkHeader(compact = false) {
+  const header = await evaluate(`(()=>{const heading=document.getElementById('greeting').getBoundingClientRect(),nav=document.querySelector('.mode-nav').getBoundingClientRect(),section=document.getElementById('today').getBoundingClientRect();return {sameRow:Math.abs((heading.top+heading.bottom)/2-(nav.top+nav.bottom)/2)<2,rightAligned:Math.abs(nav.right-section.right)<2,targets:[...document.querySelectorAll('.mode-nav a')].map(e=>{const r=e.getBoundingClientRect();return {width:r.width,height:r.height}})};})()`);
+  assert.equal(header.sameRow, true, JSON.stringify(header));
+  assert.equal(header.rightAligned, true, JSON.stringify(header));
+  assert.ok(header.targets.every(r => r.height >= 44 && (compact ? r.width === 44 : r.width > 44)), JSON.stringify(header));
+}
 
 try {
   await browser('--relaunch', '--init-script', fileURLToPath(new URL('./player-mock.js', import.meta.url)), 'open', 'about:blank');
@@ -64,6 +70,7 @@ try {
   }
   await browser('open', `${site}morning/`);
   await ready('morning');
+  await checkHeader();
   await browser('snapshot', '-i');
   assert.deepEqual(await evaluate(`(()=>{const link=document.querySelector('a[aria-label="Open Second on YouTube (opens in a new tab)"]');return {href:link?.href,target:link?.target,filter:link?.previousElementSibling?.dataset.creator,links:document.querySelectorAll('#creator-filters a').length};})()`), {
     href: 'https://www.youtube.com/@second/videos', target: '_blank', filter: '@second', links: 2,
@@ -108,6 +115,7 @@ try {
   await browser('open', site);
   await ready('morning');
   await browser('set', 'viewport', '320', '740');
+  await checkHeader(true);
   const layout = await evaluate(`({playerHeight:document.getElementById('youtube-player').getBoundingClientRect().height,frameHeight:document.getElementById('video-frame').getBoundingClientRect().height,width:innerWidth,scrollWidth:document.documentElement.scrollWidth})`);
   assert.ok(layout.playerHeight >= 200, JSON.stringify(layout));
   assert.equal(layout.scrollWidth, layout.width, JSON.stringify(layout));

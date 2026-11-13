@@ -15,10 +15,16 @@
   <a class="skip-link" href="#watch">Skip to video</a>
   <main class="wrap">
     <section class="morning" id="today" aria-labelledby="greeting">
-      <h1 id="greeting"><svg class="sun" viewBox="0 0 44 44" fill="none" aria-hidden="true"><circle cx="22" cy="22" r="8" fill="currentColor"/><path d="M22 3v6m0 26v6M3 22h6m26 0h6M8.6 8.6l4.2 4.2m18.4 18.4 4.2 4.2m0-26.8-4.2 4.2M12.8 31.2l-4.2 4.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>__GREETING__</span></h1>
+      <h1 id="greeting">__GREETING__</h1>
       <nav class="mode-nav" aria-label="Choose time of day">
-        <a data-mode="morning" href="__ASSET_PREFIX__morning/">Morning</a>
-        <a data-mode="day" href="__ASSET_PREFIX__day/">Day</a>
+        <a data-mode="morning" href="__ASSET_PREFIX__morning/" aria-label="Morning" title="Morning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18M4 21h16M7 17a5 5 0 0 1 10 0M12 2v3M4.2 7.2l2.1 2.1M19.8 7.2l-2.1 2.1M2 12h3m14 0h3"/></svg>
+          <span class="mode-label">Morning</span>
+        </a>
+        <a data-mode="day" href="__ASSET_PREFIX__day/" aria-label="Day" title="Daytime movement break">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="2"/><path d="m10 9 3-1 3-5m-6 6L6 6 3 7m7 2 2 6-5 6m5-6 5 5 3 1"/></svg>
+          <span class="mode-label">Day</span>
+        </a>
       </nav>
     </section>
 
