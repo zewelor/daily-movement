@@ -54,7 +54,7 @@ For a GitHub Pages project site, the URLs are `https://OWNER.github.io/REPOSITOR
 
 ### Automatic GitHub Pages deployment
 
-The [GitHub Pages workflow](.github/workflows/pages.yml) validates the cached metadata, runs `npm test`, builds the site offline and publishes `dist/` after a successful push to `main`. Pull requests targeting `main` run the same checks and build without deploying. Documentation-only changes are skipped; changes to tests or workflow configuration also publish after verification.
+The [GitHub Pages workflow](.github/workflows/pages.yml) validates cached metadata and JavaScript syntax, runs `npm test`, builds the site offline and runs browser E2E tests before publishing `dist/` after a successful push to `main`. Pull requests targeting `main` run the same checks without deploying. CI installs pinned `agent-browser@0.42.0` and Chrome for the browser checks. A failed syntax check or E2E test blocks artifact upload and deployment. Documentation-only changes are skipped; changes to tests or workflow configuration also publish after verification.
 
 To enable it:
 
@@ -71,6 +71,7 @@ Playback starts muted when the browser permits autoplay. Sound uses YouTube's pl
 ## Checks
 
 ```sh
+npm run check:js
 npm test
 npm run test:e2e
 ```

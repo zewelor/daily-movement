@@ -42,11 +42,22 @@ jobs:
       - name: Validate cached video metadata
         run: npm run check:videos
 
+      - name: Check JavaScript syntax
+        run: npm run check:js
+
       - name: Run tests
         run: npm test
 
       - name: Build static site offline
         run: npm run build
+
+      - name: Install browser test tooling
+        run: |
+          npm install --global agent-browser@0.42.0
+          agent-browser install --with-deps
+
+      - name: Run browser end-to-end tests
+        run: npm run test:e2e
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
