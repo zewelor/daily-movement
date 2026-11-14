@@ -31,7 +31,7 @@ const server = createServer(async (request, response) => {
     if ((await stat(file)).isDirectory()) file = join(file, 'index.html');
     const body = path.endsWith('/catalog.json') && catalogOverride !== undefined ? catalogOverride : await readFile(file);
     const status = path.endsWith('/catalog.json') ? catalogStatus : 200;
-    const types = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.svg': 'image/svg+xml' };
+    const types = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.css': 'text/css', '.svg': 'image/svg+xml' };
     response.writeHead(status, { 'Content-Type': types[extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
     response.end(body);
     requests.push({ path, status });
@@ -67,6 +67,13 @@ try {
   await browser('--relaunch', '--init-script', fileURLToPath(new URL('./player-mock.js', import.meta.url)), 'open', 'about:blank');
   for (const url of ['https://www.youtube.com/*', 'https://www.youtube-nocookie.com/*', 'https://i.ytimg.com/*']) {
     await browser('network', 'route', url, '--abort');
+  }
+  await browser('open', `${site}morning/`);
+  await ready('morning');
+  for (const path of ['morning/', 'day/', '']) {
+    await browser('open', `${site}${path}`);
+    const pwa = await evaluate(`(async()=>{const link=document.querySelector('link[rel="manifest"]');if(!link)return null;const response=await fetch(link.href);const manifest=await response.json();const icons=await Promise.all(manifest.icons.map(async icon=>{const image=new Image();image.src=new URL(icon.src,link.href);await image.decode();return [image.naturalWidth,image.naturalHeight]}));return {manifest:link.href,start:new URL(manifest.start_url,link.href).pathname,scope:new URL(manifest.scope,link.href).pathname,display:manifest.display,icons};})()`);
+    assert.deepEqual(pwa, { manifest: `${site}manifest.webmanifest`, start: '/project/', scope: '/project/', display: 'standalone', icons: [[192, 192], [512, 512]] });
   }
   await browser('open', `${site}morning/`);
   await ready('morning');

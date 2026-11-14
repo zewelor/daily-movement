@@ -21,7 +21,7 @@ async function main() {
   };
   await rm(output, { recursive: true, force: true });
   await mkdir(output);
-  for (const file of ['app.js', 'catalog.js', 'styles.css', 'sun.svg']) {
+  for (const file of ['app.js', 'catalog.js', 'styles.css', 'sun.svg', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png']) {
     await cp(join(source, file), join(output, file));
   }
   await writeFile(join(output, 'catalog.json'), JSON.stringify(catalog, null, 2) + '\n');

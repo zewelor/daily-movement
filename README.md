@@ -68,6 +68,8 @@ GitHub documents the required Pages setting in [Configuring a publishing source]
 
 Playback starts muted when the browser permits autoplay. Sound uses YouTube's player controls. Browsers may require a click to start playback, and ads or buffering can add time.
 
+Daily Movement can be installed as a desktop web app using the browser's install option. The app opens in its own window; playing videos still requires an internet connection. Browser support and the location of the install option vary.
+
 ## Checks
 
 ```sh
